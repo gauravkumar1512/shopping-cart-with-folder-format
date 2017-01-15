@@ -24,15 +24,16 @@ public class Category
 	public String getName() {
 		return name;
 	}
+	public void setDes(String des) {
+		this.des = des;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public String getDes() {
 		return des;
 	}
-	public void setDesc(String des) {
-		this.des = des;
-	}
+	
 	
 	
 }

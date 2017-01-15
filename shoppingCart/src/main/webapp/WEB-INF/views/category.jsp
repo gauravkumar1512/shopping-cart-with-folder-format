@@ -52,14 +52,13 @@ font-family: "Times New Roman", Times, serif;
 <nav class="navbar navbar-inverse" style="margin: 20px 0px 0px 0px;background-color:#20B2AA">
   <div class="container-fluid">
     <div class="navbar-header">
-      <h2 class="navbar-brand" style="color:#F5F5DC;margin:5px 0px 0px 0px">FURNITURES</h2>
+      <h2 class="navbar-brand" style="color:#F5F5DC;margin:5px 0px 0px 0px">Shoes</h2>
     </div>
     <ul class="nav navbar-nav">
       <li><a style="color:#F5F5DC;margin:5px 0px 0px 0px" href="admin"><span class="glyphicon glyphicon-home"></span></a></li>
      
      </ul>
       <ul class="nav navbar-nav" style="text-align:center">   
-       <li><h1 style="color:#F5F5DC;margin:5px 0px 0px 400px" ><center>CATEGORIES</center></h1></li>
            		
 	 </ul>
      <ul class="nav navbar-nav navbar-right">       
@@ -82,15 +81,15 @@ font-family: "Times New Roman", Times, serif;
 <h2><center>ADD CATEGORY</center></h2>
 <c:url var="addAction"  value="/category/add"></c:url>
 
-<form:form action="${addAction }" commandName="category">
+<form:form action="${addAction}" commandName="category">
 <table class="table table-condensed">
 	<tr bgcolor=#F0F8FF>
-		<td><form:label style="color:#000000" path="ID"><spring:message text="ID"/></form:label></td>
+		<td><form:label style="color:#000000" path="id"><spring:message text="id"/></form:label></td>
 		
 		
 		<c:choose>
-			<c:when test="${!empty category.ID }">
-				<td><form:input style="background-color:#F5F5DC;border:0.25px solid black" path="ID" disabled="true" readonly="true"/></td>
+			<c:when test="${!empty category.id}">
+				<td><form:input style="background-color:#F5F5DC;border:0.25px solid black" path="id" disabled="true" readonly="true"/></td>
 			</c:when>
 			<c:otherwise>
 				<td><form:input style="background-color:#F5F5DC;border:0.25px solid black" path="id"  pattern=".{4,7}" required="true" title="id should be between 4 to 7 characters"/></td>
@@ -99,22 +98,22 @@ font-family: "Times New Roman", Times, serif;
 				</tr>
 				
 				<tr bgcolor="#F0F8FF"> 
-				<form:input path="ID" hidden="true"/>
+				<form:input path="id" hidden="true"/>
 				
-				<td><form:label style="color:#000000" path="Name"> <spring:message text="NAME"/></form:label></td>
+				<td><form:label style="color:#000000" path="name"> <spring:message text="name"/></form:label></td>
         		<td><form:input style="background-color:#F5F5DC;border:0.25px solid black" path="name" required="true" /></td> 
 				</tr>
 				
 				<tr bgcolor="#F0F8FF">
-				<td><form:label style="color:#000000" path="desc" ><spring:message text="desc"/></form:label></td>
+				<td><form:label style="color:#000000" path="des" ><spring:message text="des"/></form:label></td>
 				<td><form:input style="background-color:#F5F5DC;border:0.25px solid black" path="des" required="true"/></td>
 				</tr>
 				
 				<tr bgcolor="#F0F8FF">
-				<td align="right" colspan="2"><c:if test="${!empty category.Name }">
+				<td align="right" colspan="2"><c:if test="${!empty category.name }">
 									<input style= "align:middle" class="btn btn-primary btn-md" type="submit" value="<spring:message text="Edit Category"/>"/>
 								</c:if>
-								<c:if test="${empty category.Name }">
+								<c:if test="${empty category.name }">
 									<input style= "align:middle"  class="btn btn-primary btn-md" type="submit" value="<spring:message text="Add Category"/>"/>
 								</c:if>
 				</td>
@@ -141,16 +140,95 @@ font-family: "Times New Roman", Times, serif;
 			</tr>
 					<c:forEach items="${categoryList}" var="category">
 				<tr bgcolor="#FFFFFF">
-					<td  style="color:#000000;font-size:120%" align="center">${category.ID}</td>
-					<td  style="color:#000000;font-size:120%" align="center">${category.Name}</td>
+					<td  style="color:#000000;font-size:120%" align="center">${category.id}</td>
+					<td  style="color:#000000;font-size:120%" align="center">${category.name}</td>
 					<td style="color:#000000;font-size:120%" align="center">${category.des}</td>
-					<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/edit/${category.ID}' />"><button type="button" class="btn btn-warning">Edit</button></a></td>
-					<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/remove/${category.ID}' />"><button type="button" class="btn btn-danger">Delete</button></a></td>
+					<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/edit/${category.id}' />"><button type="button" class="btn btn-warning">Edit</button></a></td>
+					<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/remove/${category.id}' />"><button type="button" class="btn btn-danger">Delete</button></a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
 	</div>
+	
+----	<!-- Listing Customers -->
+  		
+       	<div  ng-app="repeatSample" class="section">
+       		<div class="container">
+				<!-- Angular script -->
+			
+					<script>
+						var f = ${categories};
+						angular.module('repeatSample', []).controller('repeatController',
+						function($scope) {
+							$scope.categories = f;
+							$scope.sort = function(keyname) {
+							$scope.sortKey = keyname; 
+							$scope.reverse = !$scope.reverse; 
+							}
+						});
+					</script>
+
+					<div class="bs-component" ng-controller="repeatController">
+					<form class="form-inline">
+						<div class="form-group">
+							<label>Search Category</label> 
+							<div class="input-group">
+								<input type="text" ng-model="search" class="form-control" placeholder="Search">
+								<span class="input-group-btn">
+        							<button class="btn btn-secondary" type="button">Go!</button>
+      							</span>
+      						</div>
+						</div>
+					</form>
+			
+					<br>
+			
+					<hr>
+			
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th ng-click="sort('categoryId')">CATEGORY ID
+									<span class="glyphicon sort-icon" ng-show="sortKey=='categoryId'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+								</th>						
+								<th ng-click="sort('categoryName')">CATEGORY NAME 
+									<span class="glyphicon sort-icon" ng-show="sortKey=='categoryName'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+								</th>
+						
+								<th ng-click="sort('categoryDes')">CATEGORY DESCRIPTION
+									<span class="glyphicon sort-icon" ng-show="sortKey=='categoryDes'"
+									ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+								</th>
+						
+								
+ 								<th>EDIT 
+ 									<span class="glyphicon sort-icon"></span> 
+								</th> 
+						
+								<th>DELETE 
+									<span class="glyphicon sort-icon"></span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+							<tr ng-repeat="category in categories|orderBy:sortKey:reverse|filter:search">
+								<td>{{category.categoryId}}</td>
+								<td>{{category.categoryName}}</td>
+								<td>{{category.categoryDes}}</td>
+								
+ 								<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/edit/{{category.categoryId}}' />"><button type="button" class="btn btn-warning">Edit</button></a></td> 
+								<td style="color:#000000;font-size:120%" align="center"><a href="<c:url value='category/remove/{{category.categoryId}}' />"><button type="button" class="btn btn-danger">Delete</button></a></td>
+							</tr>
+						</tbody>
+					</table>
+
+					</div>
+				</div>
+			</div>  
 
 
 

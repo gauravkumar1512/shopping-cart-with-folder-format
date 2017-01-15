@@ -19,7 +19,7 @@ public class CategoryTest {
 		
 		category.setId("202");
 		category.setName("TV");
-		category.setDesc("SONY");
+		category.setDes("SONY");
 		
 		categoryDAO.addCategory(category);
 		

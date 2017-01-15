@@ -13,7 +13,7 @@ public class Product
 	private String id;
 private String name;
 private String desc;
-private Integer price;
+private int price;
 
     public String getId() {
 	return id;
@@ -33,10 +33,10 @@ public String getDesc() {
 public void setDesc(String desc) {
 	this.desc = desc;
 }
-public Integer getPrice() {
+public int getPrice() {
 	return price;
 }
-public void setPrice(Integer price) {
+public void setPrice(int price) {
 	this.price = price;
 }
 	
